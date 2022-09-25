@@ -16,3 +16,6 @@
 
 # environment configuration
 .env
+
+#build
+/build
