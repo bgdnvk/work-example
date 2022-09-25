@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"log"
 
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	"github.com/kelseyhightower/envconfig"
-    "github.com/go-chi/chi/v5"
-    "net/http"
 )
 
 type Cfg struct {
@@ -18,20 +19,20 @@ type Cfg struct {
 func main() {
 	cfg := *loadCFG("dev")
 	fmt.Printf("my cfg: %+v", cfg)
-    user  := cfg.User
-    
-    router := chi.NewRouter()
-    router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-        _, err := w.Write([]byte("Hello World the user is " + user))
-        if err != nil {
-            log.Fatal(err)
-        }
-    })
+	user := cfg.User
 
-    err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), router)
-    if err != nil {
-        log.Fatal(err)
-    }
+	router := chi.NewRouter()
+	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		_, err := w.Write([]byte("Hello World the user is " + user))
+		if err != nil {
+			log.Fatal(err)
+		}
+	})
+
+	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), router)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 
