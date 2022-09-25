@@ -19,3 +19,7 @@
 
 #build
 /build
+
+#databases
+/pg_data
+/pg_data_test
