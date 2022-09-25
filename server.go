@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"net/http"
 
@@ -36,6 +37,9 @@ func loadCFG(env string) *Cfg {
 // -- init
 func main() {
 
+	fmt.Println(os.Getenv("BOG"))
+	fmt.Println(os.Getenv("settings"))
+
 	//CFG stuff
 	cfg := *loadCFG("dev")
 	fmt.Printf("loaded cfg: %+v", cfg)
@@ -44,7 +48,7 @@ func main() {
 	//routing
 	router := chi.NewRouter()
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		_, err := w.Write([]byte("Hello World this is " + user))
+		_, err := w.Write([]byte("Hello World, this is " + user))
 		if err != nil {
 			log.Fatal(err)
 		}

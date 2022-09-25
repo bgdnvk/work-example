@@ -1,0 +1,7 @@
+{
+    "go.testEnvFile": "",
+    "go.toolsEnvVars": {
+        "BOG": "bogdan",
+        "settings": "yoooooo"
+    }
+}
