@@ -16,26 +16,6 @@ type Cfg struct {
 	Port int
 }
 
-func main() {
-	cfg := *loadCFG("dev")
-	fmt.Printf("my cfg: %+v", cfg)
-	user := cfg.User
-
-	router := chi.NewRouter()
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		_, err := w.Write([]byte("Hello World the user is " + user))
-		if err != nil {
-			log.Fatal(err)
-		}
-	})
-
-	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), router)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-}
-
 //load the env file
 //env arg is the prefix inside the env file ie dev_user
 func loadCFG(env string) *Cfg {
@@ -51,4 +31,28 @@ func loadCFG(env string) *Cfg {
 	}
 
 	return &cfg
+}
+
+// -- init
+func main() {
+
+	//CFG stuff
+	cfg := *loadCFG("dev")
+	fmt.Printf("loaded cfg: %+v", cfg)
+	user := cfg.User
+
+	//routing
+	router := chi.NewRouter()
+	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		_, err := w.Write([]byte("Hello World this is " + user))
+		if err != nil {
+			log.Fatal(err)
+		}
+	})
+	// -- START SERVER
+	err := http.ListenAndServe(fmt.Sprintf(":%d", cfg.Port), router)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
